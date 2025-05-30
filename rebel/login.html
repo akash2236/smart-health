@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | SmartHealth</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #6b8cae;
+            --accent-color: #ff7e5f;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+
+        .auth-buttons .btn {
+            margin-left: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff6a45;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Login Section */
+        .login-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 4rem 0;
+        }
+
+        .login-container {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .login-image {
+            flex: 1;
+            background: linear-gradient(rgba(74, 111, 165, 0.8), rgba(74, 111, 165, 0.8)), 
+                        url('https://images.unsplash.com/photo-1505751172876-fa1923c5c528?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .login-image h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-image p {
+            opacity: 0.9;
+        }
+
+        .login-form {
+            flex: 1;
+            padding: 3rem;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .form-header h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-header p {
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
+            outline: none;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input {
+            margin-right: 0.5rem;
+        }
+
+        .forgot-password a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .forgot-password a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 1.5rem;
+        }
+
+        .submit-btn:hover {
+            background-color: #3a5a8a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-login {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-login p {
+            position: relative;
+            color: #777;
+            margin-bottom: 1rem;
+        }
+
+        .social-login p::before,
+        .social-login p::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background-color: #ddd;
+        }
+
+        .social-login p::before {
+            left: 0;
+        }
+
+        .social-login p::after {
+            right: 0;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .social-icon.facebook {
+            background-color: #3b5998;
+        }
+
+        .social-icon.google {
+            background-color: #db4437;
+        }
+
+        .social-icon.twitter {
+            background-color: #1da1f2;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .register-link {
+            text-align: center;
+            color: #666;
+        }
+
+        .register-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .register-link a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        /* Error Message */
+        .error-message {
+            color: var(--danger-color);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+        }
+
+        .footer-content p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .login-image {
+                min-height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+            }
+
+            .login-image {
+                width: 100%;
+                min-height: 200px;
+                padding: 1.5rem;
+            }
+
+            .login-form {
+                width: 100%;
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .login-form {
+                padding: 1.5rem;
+            }
+
+            .form-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .form-options {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>SmartHealth</span>
+                </div>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline">Login</a>
+                    <a href="signup.html" class="btn btn-primary">Sign Up</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Login Section -->
+    <section class="login-section">
+        <div class="login-container">
+            <div class="login-image">
+                <div>
+                    <h2>Welcome Back!</h2>
+                    <p>Login to access your personalized health dashboard, medication reminders, and health records.</p>
+                </div>
+            </div>
+            <div class="login-form">
+                <div class="form-header">
+                    <h2>Login to Your Account</h2>
+                    <p>Enter your credentials to access your dashboard</p>
+                </div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-group">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="error-message" id="emailError">Please enter a valid email address</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        </div>
+                        <div class="error-message" id="passwordError">Password must be at least 6 characters</div>
+                    </div>
+                    <div class="form-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+                        <div class="forgot-password">
+                            <a href="forgot-password.html">Forgot password?</a>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn">Login</button>
+                    <div class="social-login">
+                        <p>Or login with</p>
+                        <div class="social-icons">
+                            <div class="social-icon facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </div>
+                            <div class="social-icon google">
+                                <i class="fab fa-google"></i>
+                            </div>
+                            <div class="social-icon twitter">
+                                <i class="fab fa-twitter"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="register-link">
+                        <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2023 SmartHealth. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Form Validation
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+
+        // Validate email format
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Validate password length
+        function validatePassword(password) {
+            return password.length >= 6;
+        }
+
+        // Show error message
+        function showError(input, errorElement, message) {
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            input.style.borderColor = 'var(--danger-color)';
+        }
+
+        // Hide error message
+        function hideError(input, errorElement) {
+            errorElement.style.display = 'none';
+            input.style.borderColor = '#ddd';
+        }
+
+        // Event listeners for real-time validation
+        emailInput.addEventListener('input', () => {
+            if (!validateEmail(emailInput.value)) {
+                showError(emailInput, emailError, 'Please enter a valid email address');
+            } else {
+                hideError(emailInput, emailError);
+            }
+        });
+
+        passwordInput.addEventListener('input', () => {
+            if (!validatePassword(passwordInput.value)) {
+                showError(passwordInput, passwordError, 'Password must be at least 6 characters');
+            } else {
+                hideError(passwordInput, passwordError);
+            }
+        });
+
+        // Form submission
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            let isValid = true;
+            
+            // Validate email
+            if (!validateEmail(emailInput.value)) {
+                showError(emailInput, emailError, 'Please enter a valid email address');
+                isValid = false;
+            }
+            
+            // Validate password
+            if (!validatePassword(passwordInput.value)) {
+                showError(passwordInput, passwordError, 'Password must be at least 6 characters');
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Show loading state
+                const submitBtn = e.target.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+                
+                // Simulate API call
+                setTimeout(() => {
+                    // Store user data in localStorage
+                    localStorage.setItem('loggedInUser', emailInput.value);
+                    localStorage.setItem('loggedIn', 'true');
+                    
+                    // Redirect to dashboard
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            }
+        });
+
+        // Check if user is already logged in
+        window.addEventListener('DOMContentLoaded', () => {
+            const loggedInUser = localStorage.getItem('loggedInUser');
+            if (loggedInUser) {
+                window.location.href = 'dashboard.html';
+            }
+        });
+    </script>
+</body>
+</html>

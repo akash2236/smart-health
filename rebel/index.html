@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartHealth - Your Personal Health Companion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --primary-dark: #3a5a8a;
+            --secondary: #6b8cae;
+            --accent: #ff7e5f;
+            --accent-hover: #ff6a45;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --gray: #95a5a6;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: var(--accent);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+        }
+
+        nav a.active::after, nav a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--accent);
+            border-radius: 3px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(74, 111, 165, 0.8), rgba(74, 111, 165, 0.8)), 
+                        url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            padding: 0 2rem;
+            margin-top: -80px;
+            padding-top: 120px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+       
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            nav {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>SmartHealth</span>
+            </a>
+            <nav>
+                <a href="index.html" class="active">Home</a>
+                <a href="dashboard.html">dashboard</a>
+                <a href="#features">Features</a>
+                <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                <a href="login.html">Login</a>
+                <a href="signup.html" class="btn btn-outline">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Your Personal Health Companion</h1>
+            <p>Never miss a dose again with our smart medicine reminder system. Track your health records, set appointments, and stay on top of your wellness journey.</p>
+            <div class="hero-buttons">
+                <a href="signup.html" class="btn btn-primary">Get Started</a>
+                <a href="#features" class="btn btn-outline">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-title">
+            <h2>Key Features</h2>
+            <p>Discover how SmartHealth can simplify your healthcare management</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <h3>Smart Reminders</h3>
+                <p>Customizable alerts for your medications, appointments, and health checkups.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-pills"></i>
+                </div>
+                <h3>Medicine Tracker</h3>
+                <p>Easily manage your medications with dosage details and instructions.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-file-medical"></i>
+                </div>
+                <h3>Health Records</h3>
+                <p>Securely store and access your medical history in one place.</p>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="#features">Features</a>
+            <a href="login.html">Login</a>
+            <a href="signup.html">Sign Up</a>
+        </div>
+        <p>&copy; 2023 SmartHealth. All rights reserved.</p>
+    </footer>
+
+    <script>
+       
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

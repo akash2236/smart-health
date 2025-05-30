@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile | SmartHealth</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #4a89dc;
+      --primary-dark: #3b6cb8;
+      --danger: #e74c3c;
+      --danger-dark: #c0392b;
+      --success: #2ecc71;
+      --success-dark: #27ae60;
+      --warning: #f39c12;
+      --warning-dark: #d35400;
+      --gray: #95a5a6;
+      --dark: #34495e;
+      --light: #ecf0f1;
+      --white: #fff;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: #f5f7fa;
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 0;
+      flex: 1;
+    }
+    
+    header {
+      background-color: var(--white);
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: var(--transition);
+    }
+    
+    .logo:hover {
+      transform: translateY(-2px);
+    }
+    
+    .logo i {
+      color: var(--primary);
+      font-size: 1.8rem;
+    }
+    
+    .logo h1 {
+      font-size: 1.5rem;
+      color: var(--dark);
+      background: linear-gradient(to right, var(--primary), var(--success));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    nav a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: var(--transition);
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+    
+    nav a:hover {
+      color: var(--primary);
+      background-color: rgba(74, 137, 220, 0.1);
+    }
+    
+    nav a.active {
+      color: var(--primary);
+      font-weight: 600;
+      background-color: rgba(74, 137, 220, 0.1);
+    }
+    
+    .btn {
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 5px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.5);
+      opacity: 0;
+      border-radius: 100%;
+      transform: scale(1, 1) translate(-50%);
+      transform-origin: 50% 50%;
+    }
+    
+    .btn:focus:not(:active)::after {
+      animation: ripple 0.6s ease-out;
+    }
+    
+    @keyframes ripple {
+      0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(20, 20);
+        opacity: 0;
+      }
+    }
+    
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+    
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .btn-danger {
+      background-color: var(--danger);
+      color: var(--white);
+    }
+    
+    .btn-danger:hover {
+      background-color: var(--danger-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    .page-header h2 {
+      font-size: 1.8rem;
+      color: var(--dark);
+      position: relative;
+    }
+    
+    .page-header h2::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(to right, var(--primary), var(--success));
+      border-radius: 3px;
+    }
+    
+    .profile-container {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 30px;
+      animation: fadeIn 0.8s ease-out;
+    }
+    
+    @media (max-width: 768px) {
+      .profile-container {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .profile-card {
+      background-color: var(--white);
+      border-radius: 8px;
+      box-shadow: var(--shadow-sm);
+      padding: 25px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    
+    .profile-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right, var(--primary), var(--success));
+    }
+    
+    .profile-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .profile-pic {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid var(--light);
+      margin: 0 auto 20px;
+      display: block;
+      background-color: #ddd;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .profile-pic i {
+      font-size: 5rem;
+      color: var(--gray);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    
+    .profile-pic img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .profile-name {
+      font-size: 1.5rem;
+      margin-bottom: 5px;
+      color: var(--dark);
+    }
+    
+    .profile-email {
+      color: var(--gray);
+      margin-bottom: 20px;
+    }
+    
+    .profile-stats {
+      display: flex;
+      justify-content: space-around;
+      margin: 25px 0;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+    
+    .profile-actions {
+      margin-top: 20px;
+    }
+    
+    .info-card {
+      background-color: var(--white);
+      border-radius: 8px;
+      box-shadow: var(--shadow-sm);
+      padding: 25px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .info-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right, var(--primary), var(--success));
+    }
+    
+    .info-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .info-section {
+      margin-bottom: 25px;
+    }
+    
+    .info-section:last-child {
+      margin-bottom: 0;
+    }
+    
+    .info-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--light);
+    }
+    
+    .info-header h3 {
+      font-size: 1.2rem;
+      color: var(--dark);
+    }
+    
+    .info-item {
+      display: flex;
+      margin-bottom: 12px;
+    }
+    
+    .info-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .info-label {
+      width: 150px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    .info-value {
+      flex: 1;
+      color: var(--dark);
+    }
+    
+    /* Modal Styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+    }
+    
+    .modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .modal-content {
+      background-color: var(--white);
+      border-radius: 8px;
+      width: 90%;
+      max-width: 500px;
+      padding: 25px;
+      position: relative;
+      transform: translateY(-20px);
+      transition: var(--transition);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .modal.active .modal-content {
+      transform: translateY(0);
+    }
+    
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--gray);
+      transition: var(--transition);
+    }
+    
+    .modal-close:hover {
+      color: var(--danger);
+      transform: rotate(90deg);
+    }
+    
+    .modal h3 {
+      margin-bottom: 20px;
+      color: var(--dark);
+      position: relative;
+    }
+    
+    .modal h3::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(to right, var(--primary), var(--success));
+      border-radius: 3px;
+    }
+    
+    .input-group {
+      margin-bottom: 15px;
+      position: relative;
+    }
+    
+    .input-group i {
+      position: absolute;
+      left: 15px;
+      top: 15px;
+      color: var(--gray);
+    }
+    
+    .input-group input,
+    .input-group textarea,
+    .input-group select {
+      width: 100%;
+      padding: 12px 15px 12px 40px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+    
+    .input-group input:focus,
+    .input-group textarea:focus,
+    .input-group select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(74, 137, 220, 0.2);
+      outline: none;
+    }
+    
+    .input-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    /* File Input */
+    .file-input {
+      display: none;
+    }
+    
+    .file-label {
+      display: block;
+      padding: 10px 15px;
+      background-color: var(--light);
+      border-radius: 4px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .file-label:hover {
+      background-color: #e0e0e0;
+    }
+    
+    /* Toast Notifications */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      border-radius: 8px;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow-lg);
+      z-index: 1100;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: var(--transition);
+      max-width: 300px;
+    }
+    
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .toast.success {
+      background-color: var(--success);
+    }
+    
+    .toast.error {
+      background-color: var(--danger);
+    }
+    
+    .toast.warning {
+      background-color: var(--warning);
+    }
+    
+    .toast i {
+      font-size: 1.2rem;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Dark mode toggle */
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      z-index: 100;
+      transition: var(--transition);
+    }
+    
+    .theme-toggle:hover {
+      transform: scale(1.1);
+    }
+    
+    /* Dark mode styles */
+    body.dark-mode {
+      background-color: #121212;
+      color: #f5f5f5;
+    }
+    
+    body.dark-mode header {
+      background-color: #1e1e1e;
+    }
+    
+    body.dark-mode .card,
+    body.dark-mode .profile-card,
+    body.dark-mode .info-card {
+      background-color: #1e1e1e;
+      color: #f5f5f5;
+    }
+    
+    body.dark-mode nav a {
+      color: #f5f5f5;
+    }
+    
+    body.dark-mode .profile-name,
+    body.dark-mode .info-header h3,
+    body.dark-mode .page-header h2 {
+      color: #f5f5f5;
+    }
+    
+    body.dark-mode .info-value {
+      color: #e0e0e0;
+    }
+    
+    body.dark-mode .input-group input,
+    body.dark-mode .input-group textarea,
+    body.dark-mode .input-group select {
+      background-color: #2d2d2d;
+      border-color: #444;
+      color: #f5f5f5;
+    }
+    
+    body.dark-mode .modal-content {
+      background-color: #1e1e1e;
+    }
+    
+    body.dark-mode .file-label {
+      background-color: #2d2d2d;
+      color: #f5f5f5;
+    }
+    
+    body.dark-mode .file-label:hover {
+      background-color: #3d3d3d;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav-container">
+      <div class="logo">
+        <i class="fas fa-heartbeat"></i>
+        <h1>SmartHealth</h1>
+      </div>
+      <nav>
+        <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="reminders.html"><i class="fas fa-bell"></i> Reminders</a>
+        <a href="appointments.html"><i class="fas fa-calendar"></i> Appointments</a>
+        <a href="profile.html" class="active"><i class="fas fa-user"></i> Profile</a>
+        <a href="#" class="btn logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h2>My Profile</h2>
+      <button class="btn btn-primary" id="editProfileBtn">
+        <i class="fas fa-edit"></i> Edit Profile
+      </button>
+    </div>
+
+    <div class="profile-container">
+      <div class="profile-card">
+        <div class="profile-pic" id="profilePicContainer">
+          <i class="fas fa-user"></i>
+          <img id="profilePic" style="display: none;">
+        </div>
+        <h3 class="profile-name" id="profileName">Loading...</h3>
+        <p class="profile-email" id="profileEmail">user@example.com</p>
+        
+        <div class="profile-stats">
+          <div class="stat-item">
+            <div class="stat-value" id="remindersCount">0</div>
+            <div class="stat-label">Reminders</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value" id="appointmentsCount">0</div>
+            <div class="stat-label">Appointments</div>
+          </div>
+        </div>
+        
+        <div class="profile-actions">
+          <button class="btn btn-outline" id="changePhotoBtn">
+            <i class="fas fa-camera"></i> Change Photo
+          </button>
+          <input type="file" id="fileInput" class="file-input" accept="image/*">
+        </div>
+      </div>
+      
+      <div class="info-card">
+        <div class="info-section">
+          <div class="info-header">
+            <h3>Personal Information</h3>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Full Name</div>
+            <div class="info-value" id="infoFullName">Loading...</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Email</div>
+            <div class="info-value" id="infoEmail">Loading...</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Phone</div>
+            <div class="info-value" id="infoPhone">Loading...</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Date of Birth</div>
+            <div class="info-value" id="infoDob">Loading...</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Gender</div>
+            <div class="info-value" id="infoGender">Loading...</div>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <div class="info-header">
+            <h3>Medical Information</h3>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Blood Type</div>
+            <div class="info-value" id="infoBloodType">Loading...</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Allergies</div>
+            <div class="info-value" id="infoAllergies">None</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Conditions</div>
+            <div class="info-value" id="infoConditions">None</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Medications</div>
+            <div class="info-value" id="infoMedications">None</div>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <div class="info-header">
+            <h3>Emergency Contact</h3>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Name</div>
+            <div class="info-value" id="infoEmergencyName">Loading...</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Relationship</div>
+            <div class="info-value" id="infoEmergencyRelation">Loading...</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Phone</div>
+            <div class="info-value" id="infoEmergencyPhone">Loading...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Edit Profile Modal -->
+  <div class="modal" id="editProfileModal">
+    <div class="modal-content">
+      <button class="modal-close"><i class="fas fa-times"></i></button>
+      <h3>Edit Profile</h3>
+      <form id="editProfileForm">
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input type="text" id="editFullName" placeholder="Full Name" required>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="editEmail" placeholder="Email" required>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-phone"></i>
+          <input type="tel" id="editPhone" placeholder="Phone Number">
+        </div>
+        <div class="input-group">
+          <i class="fas fa-birthday-cake"></i>
+          <input type="date" id="editDob" placeholder="Date of Birth">
+        </div>
+        <div class="input-group">
+          <i class="fas fa-venus-mars"></i>
+          <select id="editGender" required>
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+            <option value="Prefer not to say">Prefer not to say</option>
+          </select>
+        </div>
+        
+        <h3 style="margin: 20px 0 10px; font-size: 1.2rem;">Medical Information</h3>
+        
+        <div class="input-group">
+          <i class="fas fa-tint"></i>
+          <select id="editBloodType">
+            <option value="">Select Blood Type</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-allergies"></i>
+          <input type="text" id="editAllergies" placeholder="Allergies (comma separated)">
+        </div>
+        <div class="input-group">
+          <i class="fas fa-heartbeat"></i>
+          <input type="text" id="editConditions" placeholder="Medical Conditions (comma separated)">
+        </div>
+        <div class="input-group">
+          <i class="fas fa-pills"></i>
+          <input type="text" id="editMedications" placeholder="Current Medications (comma separated)">
+        </div>
+        
+        <h3 style="margin: 20px 0 10px; font-size: 1.2rem;">Emergency Contact</h3>
+        
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input type="text" id="editEmergencyName" placeholder="Emergency Contact Name">
+        </div>
+        <div class="input-group">
+          <i class="fas fa-link"></i>
+          <input type="text" id="editEmergencyRelation" placeholder="Relationship">
+        </div>
+        <div class="input-group">
+          <i class="fas fa-phone"></i>
+          <input type="tel" id="editEmergencyPhone" placeholder="Emergency Phone Number">
+        </div>
+        
+        <button type="submit" class="btn btn-primary" style="margin-top: 20px;">
+          <i class="fas fa-save"></i> Save Changes
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="theme-toggle" id="themeToggle">
+    <i class="fas fa-moon"></i>
+  </div>
+
+  <script>
+    // Sample profile data
+    const sampleProfile = {
+      fullName: "John Doe",
+      email: "john.doe@example.com",
+      phone: "+1 (555) 123-4567",
+      dob: "1985-06-15",
+      gender: "Male",
+      bloodType: "A+",
+      allergies: "Peanuts, Penicillin",
+      conditions: "Hypertension, Asthma",
+      medications: "Lisinopril, Albuterol",
+      emergencyName: "Jane Doe",
+      emergencyRelation: "Spouse",
+      emergencyPhone: "+1 (555) 987-6543",
+      profilePic: null,
+      stats: {
+        reminders: 4,
+        appointments: 2
+      }
+    };
+
+    // DOM Ready
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check authentication
+      if (!localStorage.getItem('loggedInUser')) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Theme toggle functionality
+      const themeToggle = document.getElementById('themeToggle');
+      const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+      
+      // Check for saved theme preference or use system preference
+      const currentTheme = localStorage.getItem('theme') || 
+                         (prefersDarkScheme.matches ? 'dark' : 'light');
+      if (currentTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+      }
+      
+      themeToggle.addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+        localStorage.setItem('theme', theme);
+        
+        if (theme === 'dark') {
+          themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+          themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+      });
+
+      // Load profile data
+      let profile = JSON.parse(localStorage.getItem('profile')) || sampleProfile;
+      renderProfile(profile);
+      
+      // Edit Profile Button
+      document.getElementById('editProfileBtn').addEventListener('click', function() {
+        const profile = JSON.parse(localStorage.getItem('profile')) || sampleProfile;
+        
+        // Populate form fields
+        document.getElementById('editFullName').value = profile.fullName || '';
+        document.getElementById('editEmail').value = profile.email || '';
+        document.getElementById('editPhone').value = profile.phone || '';
+        document.getElementById('editDob').value = profile.dob || '';
+        document.getElementById('editGender').value = profile.gender || '';
+        document.getElementById('editBloodType').value = profile.bloodType || '';
+        document.getElementById('editAllergies').value = profile.allergies || '';
+        document.getElementById('editConditions').value = profile.conditions || '';
+        document.getElementById('editMedications').value = profile.medications || '';
+        document.getElementById('editEmergencyName').value = profile.emergencyName || '';
+        document.getElementById('editEmergencyRelation').value = profile.emergencyRelation || '';
+        document.getElementById('editEmergencyPhone').value = profile.emergencyPhone || '';
+        
+        // Show modal
+        document.getElementById('editProfileModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+      
+      // Change Photo Button
+      document.getElementById('changePhotoBtn').addEventListener('click', function() {
+        document.getElementById('fileInput').click();
+      });
+      
+      // File Input Change
+      document.getElementById('fileInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          
+          reader.onload = function(event) {
+            const profilePic = document.getElementById('profilePic');
+            const profilePicContainer = document.getElementById('profilePicContainer');
+            
+            profilePic.src = event.target.result;
+            profilePic.style.display = 'block';
+            profilePicContainer.querySelector('i').style.display = 'none';
+            
+            // Save to profile
+            let profile = JSON.parse(localStorage.getItem('profile')) || sampleProfile;
+            profile.profilePic = event.target.result;
+            localStorage.setItem('profile', JSON.stringify(profile));
+            
+            showToast('Profile picture updated successfully!', 'success');
+          };
+          
+          reader.readAsDataURL(file);
+        }
+      });
+      
+      // Edit Profile Form Submission
+      document.getElementById('editProfileForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+        
+        setTimeout(() => {
+          const updatedProfile = {
+            fullName: document.getElementById('editFullName').value,
+            email: document.getElementById('editEmail').value,
+            phone: document.getElementById('editPhone').value,
+            dob: document.getElementById('editDob').value,
+            gender: document.getElementById('editGender').value,
+            bloodType: document.getElementById('editBloodType').value,
+            allergies: document.getElementById('editAllergies').value,
+            conditions: document.getElementById('editConditions').value,
+            medications: document.getElementById('editMedications').value,
+            emergencyName: document.getElementById('editEmergencyName').value,
+            emergencyRelation: document.getElementById('editEmergencyRelation').value,
+            emergencyPhone: document.getElementById('editEmergencyPhone').value,
+            profilePic: JSON.parse(localStorage.getItem('profile'))?.profilePic || null,
+            stats: JSON.parse(localStorage.getItem('profile'))?.stats || sampleProfile.stats
+          };
+          
+          localStorage.setItem('profile', JSON.stringify(updatedProfile));
+          renderProfile(updatedProfile);
+          closeModal();
+          
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+          
+          showToast('Profile updated successfully!', 'success');
+        }, 1000);
+      });
+      
+      // Logout button
+      document.querySelector('.logout-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        showDialog(
+          'Confirm Logout',
+          'Are you sure you want to logout?',
+          'Logout',
+          'Cancel',
+          () => {
+            localStorage.removeItem('loggedInUser');
+            localStorage.removeItem('loggedIn');
+            window.location.href = 'login.html';
+          }
+        );
+      });
+      
+      // Helper functions
+      function closeModal() {
+        document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
+        document.body.style.overflow = '';
+      }
+      
+      function renderProfile(profile) {
+        // Personal Info
+        document.getElementById('profileName').textContent = profile.fullName;
+        document.getElementById('profileEmail').textContent = profile.email;
+        
+        // Profile Pic
+        const profilePic = document.getElementById('profilePic');
+        const profilePicIcon = document.getElementById('profilePicContainer').querySelector('i');
+        
+        if (profile.profilePic) {
+          profilePic.src = profile.profilePic;
+          profilePic.style.display = 'block';
+          profilePicIcon.style.display = 'none';
+        } else {
+          profilePic.style.display = 'none';
+          profilePicIcon.style.display = 'block';
+        }
+        
+        // Stats
+        document.getElementById('remindersCount').textContent = profile.stats?.reminders || 0;
+        document.getElementById('appointmentsCount').textContent = profile.stats?.appointments || 0;
+        
+        // Personal Information
+        document.getElementById('infoFullName').textContent = profile.fullName;
+        document.getElementById('infoEmail').textContent = profile.email;
+        document.getElementById('infoPhone').textContent = profile.phone || 'Not provided';
+        document.getElementById('infoDob').textContent = profile.dob ? formatDate(profile.dob) : 'Not provided';
+        document.getElementById('infoGender').textContent = profile.gender || 'Not provided';
+        
+        // Medical Information
+        document.getElementById('infoBloodType').textContent = profile.bloodType || 'Not provided';
+        document.getElementById('infoAllergies').textContent = profile.allergies || 'None';
+        document.getElementById('infoConditions').textContent = profile.conditions || 'None';
+        document.getElementById('infoMedications').textContent = profile.medications || 'None';
+        
+        // Emergency Contact
+        document.getElementById('infoEmergencyName').textContent = profile.emergencyName || 'Not provided';
+        document.getElementById('infoEmergencyRelation').textContent = profile.emergencyRelation || 'Not provided';
+        document.getElementById('infoEmergencyPhone').textContent = profile.emergencyPhone || 'Not provided';
+      }
+      
+      function formatDate(dateStr) {
+        if (!dateStr) return '';
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateStr).toLocaleDateString(undefined, options);
+      }
+      
+      function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type} show`;
+        toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check' : 'exclamation'}-circle"></i> ${message}`;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+          toast.classList.remove('show');
+          setTimeout(() => toast.remove(), 300);
+        }, 3000);
+      }
+      
+      function showDialog(title, message, confirmText, cancelText, confirmCallback) {
+        const dialog = document.createElement('div');
+        dialog.className = 'modal active';
+        dialog.innerHTML = `
+          <div class="modal-content">
+            <h3>${title}</h3>
+            <p>${message}</p>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+              <button class="btn btn-primary" id="confirmDialogBtn">${confirmText}</button>
+              <button class="btn btn-outline" id="cancelDialogBtn">${cancelText}</button>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(dialog);
+        
+        document.getElementById('confirmDialogBtn').addEventListener('click', () => {
+          dialog.remove();
+          confirmCallback();
+        });
+        
+        document.getElementById('cancelDialogBtn').addEventListener('click', () => {
+          dialog.remove();
+        });
+      }
+      
+      // Update stats from other pages
+      function updateStats() {
+        const profile = JSON.parse(localStorage.getItem('profile')) || sampleProfile;
+        
+        // Get reminders count
+        const medications = JSON.parse(localStorage.getItem('medications')) || [];
+        const activeReminders = medications.filter(m => m.status === 'active').length;
+        
+        // Get appointments count
+        const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+        const upcomingAppointments = appointments.filter(a => a.status === 'upcoming').length;
+        
+        // Update profile stats
+        profile.stats = {
+          reminders: activeReminders,
+          appointments: upcomingAppointments
+        };
+        
+        localStorage.setItem('profile', JSON.stringify(profile));
+        renderProfile(profile);
+      }
+      
+      // Initialize stats
+      updateStats();
+      
+      // Show welcome message
+      const user = localStorage.getItem('loggedInUser');
+      if (user) {
+        showToast(`Welcome back, ${user.split('@')[0]}!`, 'success');
+      }
+    });
+  </script>
+</body>
+</html>
